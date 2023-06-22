@@ -22,6 +22,13 @@ const CollegePredictor = () => {
                     return closingRank > parseInt(rank, 10);
                 });
 
+                // Sort the filteredData in ascending order of closing rank
+                filteredData.sort((a, b) => {
+                    const rankA = parseInt(a["Closing Rank"], 10);
+                    const rankB = parseInt(b["Closing Rank"], 10);
+                    return rankA - rankB;
+                });
+
                 setFilteredData(filteredData);
                 setIsLoading(false);
             } catch (error) {
