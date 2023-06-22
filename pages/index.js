@@ -40,14 +40,19 @@ const HomePage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.content}>
-                <h1>Home Page</h1>
+                <h1>AF College Predictor</h1>
+                <label className={styles.label}>Select Category:</label>
                 <Dropdown options={options} onChange={handleDropdownChange} />
+                <p />
+                <p />
+                <label className={styles.label}>Enter Rank:</label>
                 <input
                     type="number"
                     value={rank}
                     onChange={handleRankChange}
                     className={styles.input}
                 />
+
                 <button
                     className={styles.button}
                     onClick={handleSubmit}
