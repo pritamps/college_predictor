@@ -8,6 +8,7 @@ const CollegePredictor = () => {
     const { rank, category } = router.query;
     console.log(category);
     const [filteredData, setFilteredData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,12 +23,15 @@ const CollegePredictor = () => {
                 });
 
                 setFilteredData(filteredData);
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching data:", error);
+                setIsLoading(false);
             }
         };
 
         if (rank) {
+            setIsLoading(true);
             fetchData();
         }
     }, [rank]);
@@ -38,43 +42,52 @@ const CollegePredictor = () => {
                 <h1>College Predictor</h1>
                 <h2>Your Rank: {rank}</h2>
                 <h3>Predicted colleges and courses for you</h3>
-                <table className={styles.table}>
-                    <thead>
-                        <tr className={styles.header_row}>
-                            <th>Institute</th>
-                            <th>Academic Program Name</th>
-                            <th>Round</th>
-                            <th>Opening Rank</th>
-                            <th>Closing Rank</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredData.map((item, index) => (
-                            <tr
-                                key={index}
-                                className={
-                                    index % 2 === 0
-                                        ? styles.even_row
-                                        : styles.odd_row
-                                }
-                            >
-                                <td className={styles.cell}>
-                                    {item.Institute}
-                                </td>
-                                <td className={styles.cell}>
-                                    {item["Academic Program Name"]}
-                                </td>
-                                <td className={styles.cell}>{item["Round"]}</td>
-                                <td className={styles.cell}>
-                                    {item["Opening Rank"]}
-                                </td>
-                                <td className={styles.cell}>
-                                    {item["Closing Rank"]}
-                                </td>
+                {isLoading ? (
+                    <div className={styles.loading}>
+                        <div className={styles.spinner}></div>
+                        <p>Loading...</p>
+                    </div>
+                ) : (
+                    <table className={styles.table}>
+                        <thead>
+                            <tr className={styles.header_row}>
+                                <th>Institute</th>
+                                <th>Academic Program Name</th>
+                                <th>Round</th>
+                                <th>Opening Rank</th>
+                                <th>Closing Rank</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {filteredData.map((item, index) => (
+                                <tr
+                                    key={index}
+                                    className={
+                                        index % 2 === 0
+                                            ? styles.even_row
+                                            : styles.odd_row
+                                    }
+                                >
+                                    <td className={styles.cell}>
+                                        {item.Institute}
+                                    </td>
+                                    <td className={styles.cell}>
+                                        {item["Academic Program Name"]}
+                                    </td>
+                                    <td className={styles.cell}>
+                                        {item["Round"]}
+                                    </td>
+                                    <td className={styles.cell}>
+                                        {item["Opening Rank"]}
+                                    </td>
+                                    <td className={styles.cell}>
+                                        {item["Closing Rank"]}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
         </div>
     );
