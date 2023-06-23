@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Script from 'next/script'
 import Dropdown from "../components/dropdown";
 import { useRouter } from "next/router";
 import styles from "./index.module.css";
@@ -31,13 +32,12 @@ const HomePage = () => {
     const [category, setCategory] = useState("");
     const router = useRouter();
 
-    const handleDropdownChange = (selectedOption, dropdownType) => {
-        if (dropdownType == "category") {
-            setCategory(selectedOption.label);
-        }
-        else if (dropdownType == "roundNumber") {
-            setRoundNumber(selectedOption.value);
-        }
+    const handleCategoryDropdownChange = (selectedOption) => {
+        setCategory(selectedOption.label);
+    };
+
+    const handleRoundNumberDropdownChange = (selectedOption) => {
+        setRoundNumber(selectedOption.value);
     };
 
     const handleRankChange = (event) => {
@@ -56,12 +56,25 @@ const HomePage = () => {
 
     return (
         <div className={styles.container}>
+            <Script
+                src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
+                strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+                {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){window.dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'GA_MEASUREMENT_ID');
+                `}
+            </Script>
             <div className={styles.content}>
                 <h1>AF College Predictor</h1>
                 <label className={styles.label}>Select Category:</label>
                 <Dropdown 
                     options={categoryOptions} 
-                    onChange={(selectedOption) => handleDropdownChange(selectedOption, "category")}
+                    onChange={handleCategoryDropdownChange}
                 />
                 <p />
                 <p />
@@ -78,7 +91,7 @@ const HomePage = () => {
                 <label className={styles.label}>Select Round Number:</label>
                 <Dropdown 
                     options={roundNumberOptions} 
-                    onChange={(selectedOption) => handleDropdownChange(selectedOption, "roundNumber")}
+                    onChange={handleRoundNumberDropdownChange}
                 />
 
                 <button
