@@ -8,6 +8,8 @@
 .content {
     max-width: 600px;
     padding: 20px;
+    text-align: center;
+    font-size: 11pt;
 }
 
 .table {
