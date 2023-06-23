@@ -57,7 +57,7 @@ const HomePage = () => {
     return (
         <div className={styles.container}>
             <Script
-                src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
+                src="https://www.googletagmanager.com/gtag/js?id=G-FHGVRT52L7"
                 strategy="afterInteractive"
             />
             <Script id="google-analytics" strategy="afterInteractive">
@@ -66,7 +66,7 @@ const HomePage = () => {
                 function gtag(){window.dataLayer.push(arguments);}
                 gtag('js', new Date());
 
-                gtag('config', 'GA_MEASUREMENT_ID');
+                gtag('config', 'G-FHGVRT52L7');
                 `}
             </Script>
             <div className={styles.content}>
