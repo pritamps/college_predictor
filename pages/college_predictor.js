@@ -63,6 +63,7 @@ const CollegePredictor = () => {
                                 <th>Round</th>
                                 <th>Opening Rank</th>
                                 <th>Closing Rank</th>
+                                <th>Quota</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,6 +90,9 @@ const CollegePredictor = () => {
                                     </td>
                                     <td className={styles.cell}>
                                         {item["Closing Rank"]}
+                                    </td>
+                                    <td className={styles.cell}>
+                                        {item["Quota"]}
                                     </td>
                                 </tr>
                             ))}
