@@ -5,8 +5,7 @@ import styles from "./college_predictor.module.css";
 const CollegePredictor = () => {
     const router = useRouter();
     console.log(router.query);
-    const { rank, category } = router.query;
-    console.log(category);
+    const { rank, category, roundNumber } = router.query;
     const [filteredData, setFilteredData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -16,16 +15,22 @@ const CollegePredictor = () => {
                 const response = await fetch("/data/" + category + ".json"); // Replace with the path to your category JSON file
                 const data = await response.json();
 
+                // Filter the data based on round number
+                const dataForGivenRound = data.filter((item) => {
+                    const itemRound = item["Round"];
+                    return itemRound == roundNumber;
+                });
+
                 // Filter the data based on closing rank
-                const filteredData = data.filter((item) => {
+                const filteredData = dataForGivenRound.filter((item) => {
                     const closingRank = parseInt(item["Closing Rank"], 10);
                     return closingRank > parseInt(rank, 10);
                 });
 
-                // Sort the filteredData in ascending order of closing rank
+                // Sort the filteredData in ascending order of college rank
                 filteredData.sort((a, b) => {
-                    const rankA = parseInt(a["Closing Rank"], 10);
-                    const rankB = parseInt(b["Closing Rank"], 10);
+                    const rankA = a["College Rank"];
+                    const rankB = b["College Rank"];
                     return rankA - rankB;
                 });
 
@@ -47,7 +52,8 @@ const CollegePredictor = () => {
         <div className={styles.container}>
             <div className={styles.content}>
                 <h1>College Predictor</h1>
-                <h2>Your Rank: {rank}</h2>
+                <h2>Your Category Rank: {rank}</h2>
+                <h2>Chosen Round Number: {roundNumber}</h2>
                 <h3>Predicted colleges and courses for you</h3>
                 {isLoading ? (
                     <div className={styles.loading}>
@@ -58,9 +64,9 @@ const CollegePredictor = () => {
                     <table className={styles.table}>
                         <thead>
                             <tr className={styles.header_row}>
+                                <th>Institute Rank</th>
                                 <th>Institute</th>
                                 <th>Academic Program Name</th>
-                                <th>Round</th>
                                 <th>Opening Rank</th>
                                 <th>Closing Rank</th>
                                 <th>Quota</th>
@@ -77,13 +83,13 @@ const CollegePredictor = () => {
                                     }
                                 >
                                     <td className={styles.cell}>
+                                        {item["College Rank"]}
+                                    </td>
+                                    <td className={styles.cell}>
                                         {item.Institute}
                                     </td>
                                     <td className={styles.cell}>
                                         {item["Academic Program Name"]}
-                                    </td>
-                                    <td className={styles.cell}>
-                                        {item["Round"]}
                                     </td>
                                     <td className={styles.cell}>
                                         {item["Opening Rank"]}
