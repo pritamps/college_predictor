@@ -18,6 +18,11 @@ const HomePage = () => {
         { value: "st", label: "ST" },
     ];
 
+    const genderOptions = [
+        {value: "gender_neutral", label: "Gender-Neutral" },
+        {value: "female_only", label: "Female-only (including Supernumerary)"}
+    ]
+
     const roundNumberOptions = [
         { value: 1, label: "Round 1" },
         { value: 2, label: "Round 2" },
@@ -30,6 +35,7 @@ const HomePage = () => {
     const [rank, setRank] = useState(0);
     const [roundNumber, setRoundNumber] = useState("");
     const [category, setCategory] = useState("");
+    const [gender, setGender] = useState("");
     const router = useRouter();
 
     const handleCategoryDropdownChange = (selectedOption) => {
@@ -40,19 +46,24 @@ const HomePage = () => {
         setRoundNumber(selectedOption.value);
     };
 
+    const handleGenderDropdownChange = (selectedOption) => {
+        setGender(selectedOption.label);
+    };
+
     const handleRankChange = (event) => {
         const enteredRank = event.target.value;
         setRank(enteredRank);
     };
 
     const handleSubmit = () => {
-        router.push(`/college_predictor?rank=${rank}&category=${category}&roundNumber=${roundNumber}`);
+        router.push(`/college_predictor?rank=${rank}&category=${category}&roundNumber=${roundNumber}&gender=${gender}`);
     };
 
 
     const isCategoryInOptions = categoryOptions.some(option => option.label === category);
     const isRoundNumberInOptions = roundNumberOptions.some(option => option.value == roundNumber);
-    const isSubmitDisabled = rank <= 0 || !isCategoryInOptions || !isRoundNumberInOptions;
+    const isGenderInOptions = genderOptions.some(option => option.label === gender);
+    const isSubmitDisabled = rank <= 0 || !isCategoryInOptions || !isRoundNumberInOptions || !isGenderInOptions;
 
     return (
         <div className={styles.container}>
@@ -92,6 +103,13 @@ const HomePage = () => {
                 <Dropdown 
                     options={roundNumberOptions} 
                     onChange={handleRoundNumberDropdownChange}
+                />
+                <p />
+                <p />
+                <label className={styles.label}>Select Gender:</label>
+                <Dropdown 
+                    options={genderOptions} 
+                    onChange={handleGenderDropdownChange}
                 />
 
                 <button
