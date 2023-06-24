@@ -8,6 +8,8 @@ const constants = {
     ],
     RANK_LABEL: "Enter Category Rank:",
     GENDER_LABEL: "Select Gender:",
+    EXAM_LABEL: "Select Exam:",
+    STATE_LABEL: "Select State Name:",
     ROUND_NUMBER_LABEL: "Select Round Number:",
     ROUND_NUMBER_OPTIONS: [
         { value: "1", label: "1" },
@@ -29,13 +31,52 @@ const constants = {
         { value: "st_pwd", label: "ST (PwD)" },
         { value: "st", label: "ST" },
     ],
-    genderOptions: [
+    GENDER_OPTIONS: [
         { value: "gender_neutral", label: "Gender-Neutral" },
         {
             value: "female_only",
             label: "Female-only (including Supernumerary)",
         },
     ],
+    EXAM_OPTIONS: [
+        {value: "jee_main", label: "JEE Main"},
+        {value: "jee_advanced", label: "JEE Advanced"}
+    ],
+    STATE_OPTIONS: [
+        { value: 'all_india', label: 'All India' },
+        { value: 'andhra_pradesh', label: 'Andhra Pradesh' },
+        { value: 'arunachal_pradesh', label: 'Arunachal Pradesh' },
+        { value: 'assam', label: 'Assam' },
+        { value: 'bihar', label: 'Bihar' },
+        { value: 'chhatisgarh', label: 'Chhatisgarh' },
+        { value: 'diu', label: 'Diu' },
+        { value: 'goa', label: 'Goa' },
+        { value: 'gujarat', label: 'Gujarat' },
+        { value: 'haryana', label: 'Haryana' },
+        { value: 'himachal_pradesh', label: 'Himachal Pradesh' },
+        { value: 'jharkhand', label: 'Jharkhand' },
+        { value: 'jammu_&_kashmir', label: 'Jammu & Kashmir' },
+        { value: 'karnataka', label: 'Karnataka' },
+        { value: 'kerala', label: 'Kerala' },
+        { value: 'madhya_pradesh', label: 'Madhya Pradesh' },
+        { value: 'maharashtra', label: 'Maharashtra' },
+        { value: 'manipur', label: 'Manipur' },
+        { value: 'meghalaya', label: 'Meghalaya' },
+        { value: 'mizoram', label: 'Mizoram' },
+        { value: 'nagaland', label: 'Nagaland' },
+        { value: 'new_delhi', label: 'New Delhi' },
+        { value: 'odisha', label: 'Odisha' },
+        { value: 'puducherry', label: 'Puducherry' },
+        { value: 'punjab', label: 'Punjab' },
+        { value: 'rajasthan', label: 'Rajasthan' },
+        { value: 'sikkim', label: 'Sikkim' },
+        { value: 'tamil_nadu', label: 'Tamil Nadu' },
+        { value: 'telangana', label: 'Telangana' },
+        { value: 'tripura', label: 'Tripura' },
+        { value: 'uttar_pradesh', label: 'Uttar Pradesh' },
+        { value: 'uttarakhand', label: 'Uttarakhand' },
+        { value: 'west_bengal', label: 'West Bengal' }
+    ]
 };
 
 export default function getConstants() {

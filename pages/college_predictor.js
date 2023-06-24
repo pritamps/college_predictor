@@ -6,7 +6,7 @@ import getConstants from "../constants";
 const CollegePredictor = () => {
     const router = useRouter();
     console.log(router.query);
-    const { rank, category, roundNumber, gender } = router.query;
+    const { rank, category, roundNumber, gender, exam, stateName } = router.query;
     const [filteredData, setFilteredData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -17,14 +17,18 @@ const CollegePredictor = () => {
                 const data = await response.json();
 
                 // Filter the data based on round number
-                const dataForGivenRoundAndGender = data.filter((item) => {
+                const dataForGivenQuery = data.filter((item) => {
                     const itemRound = item["Round"];
                     const itemGender = item["Gender"];
-                    return itemRound == roundNumber && itemGender == gender;
+                    const itemState = item["State"];
+                    const itemExam = item["Exam"];
+                    const itemQuota = item["Quota"];
+                    const checkForState = (itemState == stateName) || (stateName == "All India") || (itemQuota == "OS") || (itemState == "AI");
+                    return itemRound == roundNumber && itemGender == gender && itemExam == exam && checkForState;
                 });
 
                 // Filter the data based on closing rank
-                const filteredData = dataForGivenRoundAndGender.filter(
+                const filteredData = dataForGivenQuery.filter(
                     (item) => {
                         const closingRank = parseInt(item["Closing Rank"], 10);
                         return closingRank > parseInt(rank, 10);
@@ -59,6 +63,8 @@ const CollegePredictor = () => {
                 <h2>Your Category Rank: {rank}</h2>
                 <h3>Chosen Round Number: {roundNumber}</h3>
                 <h3>Chosen Gender: {gender}</h3>
+                <h3>Chosen Exam: {exam}</h3>
+                <h3>Chosen State: {stateName}</h3>
 
                 <h3>Predicted colleges and courses for you</h3>
                 {isLoading ? (
@@ -77,6 +83,7 @@ const CollegePredictor = () => {
                             <thead>
                                 <tr className={styles.header_row}>
                                     <th>Institute Rank</th>
+                                    <th>State</th>
                                     <th>Institute</th>
                                     <th>Academic Program Name</th>
                                     <th>Opening Rank</th>
@@ -96,6 +103,9 @@ const CollegePredictor = () => {
                                     >
                                         <td className={styles.cell}>
                                             {item["College Rank"]}
+                                        </td>
+                                        <td className={styles.cell}>
+                                            {item["State"]}
                                         </td>
                                         <td className={styles.cell}>
                                             {item.Institute}
