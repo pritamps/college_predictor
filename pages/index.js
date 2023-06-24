@@ -1,36 +1,16 @@
 import React, { useState } from "react";
-import Script from 'next/script'
+import Script from "next/script";
 import Dropdown from "../components/dropdown";
 import { useRouter } from "next/router";
 import styles from "./index.module.css";
+import getConstants from "../constants";
 
 const HomePage = () => {
-    const categoryOptions = [
-        { value: "ews_pwd", label: "EWS (PwD)" },
-        { value: "ews", label: "EWS" },
-        { value: "obc_ncl_pwd", label: "OBC-NCL (PwD)" },
-        { value: "obc_ncl", label: "OBC-NCL" },
-        { value: "open_pwd", label: "OPEN (PwD)" },
-        { value: "open", label: "OPEN" },
-        { value: "sc_pwd", label: "SC (PwD)" },
-        { value: "sc", label: "SC" },
-        { value: "st_pwd", label: "ST (PwD)" },
-        { value: "st", label: "ST" },
-    ];
+    const categoryOptions = getConstants().CATEGORY_OPTIONS;
 
-    const genderOptions = [
-        {value: "gender_neutral", label: "Gender-Neutral" },
-        {value: "female_only", label: "Female-only (including Supernumerary)"}
-    ]
+    const genderOptions = getConstants().genderOptions;
 
-    const roundNumberOptions = [
-        { value: 1, label: "Round 1" },
-        { value: 2, label: "Round 2" },
-        { value: 3, label: "Round 3" },
-        { value: 4, label: "Round 4" },
-        { value: 5, label: "Round 5" },
-        { value: 6, label: "Round 6" }
-    ];
+    const roundNumberOptions = getConstants().ROUND_NUMBER_OPTIONS;
 
     const [rank, setRank] = useState(0);
     const [roundNumber, setRoundNumber] = useState("");
@@ -56,14 +36,25 @@ const HomePage = () => {
     };
 
     const handleSubmit = () => {
-        router.push(`/college_predictor?rank=${rank}&category=${category}&roundNumber=${roundNumber}&gender=${gender}`);
+        router.push(
+            `/college_predictor?rank=${rank}&category=${category}&roundNumber=${roundNumber}&gender=${gender}`
+        );
     };
 
-
-    const isCategoryInOptions = categoryOptions.some(option => option.label === category);
-    const isRoundNumberInOptions = roundNumberOptions.some(option => option.value == roundNumber);
-    const isGenderInOptions = genderOptions.some(option => option.label === gender);
-    const isSubmitDisabled = rank <= 0 || !isCategoryInOptions || !isRoundNumberInOptions || !isGenderInOptions;
+    const isCategoryInOptions = categoryOptions.some(
+        (option) => option.label === category
+    );
+    const isRoundNumberInOptions = roundNumberOptions.some(
+        (option) => option.value == roundNumber
+    );
+    const isGenderInOptions = genderOptions.some(
+        (option) => option.label === gender
+    );
+    const isSubmitDisabled =
+        rank <= 0 ||
+        !isCategoryInOptions ||
+        !isRoundNumberInOptions ||
+        !isGenderInOptions;
 
     return (
         <div className={styles.container}>
@@ -81,15 +72,19 @@ const HomePage = () => {
                 `}
             </Script>
             <div className={styles.content}>
-                <h1>AF College Predictor</h1>
-                <label className={styles.label}>Select Category:</label>
-                <Dropdown 
-                    options={categoryOptions} 
+                <h1>{getConstants().TITLE}</h1>
+                <label className={styles.label}>
+                    {getConstants().CATEGORY_LABEL}
+                </label>
+                <Dropdown
+                    options={categoryOptions}
                     onChange={handleCategoryDropdownChange}
                 />
                 <p />
                 <p />
-                <label className={styles.label}>Enter Category Rank:</label>
+                <label className={styles.label}>
+                    {getConstants().RANK_LABEL}
+                </label>
                 <input
                     type="number"
                     value={rank}
@@ -99,16 +94,20 @@ const HomePage = () => {
                 <p />
                 <p />
 
-                <label className={styles.label}>Select Round Number:</label>
-                <Dropdown 
-                    options={roundNumberOptions} 
+                <label className={styles.label}>
+                    {getConstants().ROUND_NUMBER_LABEL}
+                </label>
+                <Dropdown
+                    options={roundNumberOptions}
                     onChange={handleRoundNumberDropdownChange}
                 />
                 <p />
                 <p />
-                <label className={styles.label}>Select Gender:</label>
-                <Dropdown 
-                    options={genderOptions} 
+                <label className={styles.label}>
+                    {getConstants().GENDER_LABEL}
+                </label>
+                <Dropdown
+                    options={genderOptions}
                     onChange={handleGenderDropdownChange}
                 />
 

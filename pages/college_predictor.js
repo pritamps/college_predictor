@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "./college_predictor.module.css";
+import getConstants from "../constants";
 
 const CollegePredictor = () => {
     const router = useRouter();
@@ -54,7 +55,7 @@ const CollegePredictor = () => {
     return (
         <div className={styles.container}>
             <div className={styles.content}>
-                <h1>College Predictor</h1>
+                <h1>{getConstants().TITLE}</h1>
                 <h2>Your Category Rank: {rank}</h2>
                 <h3>Chosen Round Number: {roundNumber}</h3>
                 <h3>Chosen Gender: {gender}</h3>
