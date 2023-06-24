@@ -8,14 +8,20 @@ import getConstants from "../constants";
 const HomePage = () => {
     const categoryOptions = getConstants().CATEGORY_OPTIONS;
 
-    const genderOptions = getConstants().genderOptions;
+    const genderOptions = getConstants().GENDER_OPTIONS;
 
     const roundNumberOptions = getConstants().ROUND_NUMBER_OPTIONS;
+
+    const examOptions = getConstants().EXAM_OPTIONS;
+
+    const stateOptions = getConstants().STATE_OPTIONS;
 
     const [rank, setRank] = useState(0);
     const [roundNumber, setRoundNumber] = useState("");
     const [category, setCategory] = useState("");
     const [gender, setGender] = useState("");
+    const [exam, setExam] = useState("");
+    const [stateName, setStateName] = useState("");
     const router = useRouter();
 
     const handleCategoryDropdownChange = (selectedOption) => {
@@ -23,11 +29,19 @@ const HomePage = () => {
     };
 
     const handleRoundNumberDropdownChange = (selectedOption) => {
-        setRoundNumber(selectedOption.value);
+        setRoundNumber(selectedOption.label);
     };
 
     const handleGenderDropdownChange = (selectedOption) => {
         setGender(selectedOption.label);
+    };
+
+    const handleExamDropdownChange = (selectedOption) => {
+        setExam(selectedOption.label);
+    };
+
+    const handleStateNameDropdownChange = (selectedOption) => {
+        setStateName(selectedOption.label);
     };
 
     const handleRankChange = (event) => {
@@ -37,7 +51,7 @@ const HomePage = () => {
 
     const handleSubmit = () => {
         router.push(
-            `/college_predictor?rank=${rank}&category=${category}&roundNumber=${roundNumber}&gender=${gender}`
+            `/college_predictor?rank=${rank}&category=${category}&roundNumber=${roundNumber}&gender=${gender}&exam=${exam}&stateName=${stateName}`
         );
     };
 
@@ -45,16 +59,25 @@ const HomePage = () => {
         (option) => option.label === category
     );
     const isRoundNumberInOptions = roundNumberOptions.some(
-        (option) => option.value == roundNumber
+        (option) => option.label == roundNumber
     );
     const isGenderInOptions = genderOptions.some(
         (option) => option.label === gender
     );
+    const isExamInOptions = examOptions.some(
+        (option) => option.label === exam
+    );
+    const isStateNameInOptions = stateOptions.some(
+        (option) => option.label === stateName
+    );
+
     const isSubmitDisabled =
         rank <= 0 ||
         !isCategoryInOptions ||
         !isRoundNumberInOptions ||
-        !isGenderInOptions;
+        !isGenderInOptions ||
+        !isExamInOptions ||
+        !isStateNameInOptions;
 
     return (
         <div className={styles.container}>
@@ -74,6 +97,15 @@ const HomePage = () => {
             <div className={styles.content}>
                 <h1>{getConstants().TITLE}</h1>
                 <label className={styles.label}>
+                    {getConstants().EXAM_LABEL}
+                </label>
+                <Dropdown
+                    options={examOptions}
+                    onChange={handleExamDropdownChange}
+                />
+                <p />
+                <p />
+                <label className={styles.label}>
                     {getConstants().CATEGORY_LABEL}
                 </label>
                 <Dropdown
@@ -83,7 +115,7 @@ const HomePage = () => {
                 <p />
                 <p />
                 <label className={styles.label}>
-                    {getConstants().RANK_LABEL}
+                    {getConstants().RANK_LABEL + "(" + exam + "):"}
                 </label>
                 <input
                     type="number"
@@ -110,6 +142,16 @@ const HomePage = () => {
                     options={genderOptions}
                     onChange={handleGenderDropdownChange}
                 />
+                <p />
+                <p />
+                <label className={styles.label}>
+                    {getConstants().STATE_LABEL}
+                </label>
+                <Dropdown
+                    options={stateOptions}
+                    onChange={handleStateNameDropdownChange}
+                />
+                <p />
 
                 <button
                     className={styles.button}
