@@ -6,10 +6,10 @@ const constants = {
         { value: "HS", label: "HS" },
         { value: "OS", label: "OS" },
     ],
-    RANK_LABEL: "Enter Category Rank:",
+    RANK_LABEL: "Enter Category Rank ",
     GENDER_LABEL: "Select Gender:",
     EXAM_LABEL: "Select Exam:",
-    STATE_LABEL: "Select State Name:",
+    STATE_LABEL: "Select Your Home State:",
     ROUND_NUMBER_LABEL: "Select Round Number:",
     ROUND_NUMBER_OPTIONS: [
         { value: "1", label: "1" },

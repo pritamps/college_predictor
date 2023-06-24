@@ -23,7 +23,7 @@ const CollegePredictor = () => {
                     const itemState = item["State"];
                     const itemExam = item["Exam"];
                     const itemQuota = item["Quota"];
-                    const checkForState = (itemState == stateName) || (stateName == "All India") || (itemQuota == "OS") || (itemState == "AI");
+                    const checkForState = (itemState == stateName) || (stateName == "All India") || (itemQuota == "OS") || (itemQuota == "AI");
                     return itemRound == roundNumber && itemGender == gender && itemExam == exam && checkForState;
                 });
 
@@ -64,7 +64,7 @@ const CollegePredictor = () => {
                 <h3>Chosen Round Number: {roundNumber}</h3>
                 <h3>Chosen Gender: {gender}</h3>
                 <h3>Chosen Exam: {exam}</h3>
-                <h3>Chosen State: {stateName}</h3>
+                <h3>Chosen Home State: {stateName}</h3>
 
                 <h3>Predicted colleges and courses for you</h3>
                 {isLoading ? (

@@ -97,6 +97,15 @@ const HomePage = () => {
             <div className={styles.content}>
                 <h1>{getConstants().TITLE}</h1>
                 <label className={styles.label}>
+                    {getConstants().EXAM_LABEL}
+                </label>
+                <Dropdown
+                    options={examOptions}
+                    onChange={handleExamDropdownChange}
+                />
+                <p />
+                <p />
+                <label className={styles.label}>
                     {getConstants().CATEGORY_LABEL}
                 </label>
                 <Dropdown
@@ -106,7 +115,7 @@ const HomePage = () => {
                 <p />
                 <p />
                 <label className={styles.label}>
-                    {getConstants().RANK_LABEL}
+                    {getConstants().RANK_LABEL + "(" + exam + "):"}
                 </label>
                 <input
                     type="number"
@@ -132,15 +141,6 @@ const HomePage = () => {
                 <Dropdown
                     options={genderOptions}
                     onChange={handleGenderDropdownChange}
-                />
-                <p />
-                <p />
-                <label className={styles.label}>
-                    {getConstants().EXAM_LABEL}
-                </label>
-                <Dropdown
-                    options={examOptions}
-                    onChange={handleExamDropdownChange}
                 />
                 <p />
                 <p />
