@@ -5,7 +5,7 @@ import styles from "./college_predictor.module.css";
 const CollegePredictor = () => {
     const router = useRouter();
     console.log(router.query);
-    const { rank, category, roundNumber } = router.query;
+    const { rank, category, roundNumber, gender } = router.query;
     const [filteredData, setFilteredData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -16,13 +16,14 @@ const CollegePredictor = () => {
                 const data = await response.json();
 
                 // Filter the data based on round number
-                const dataForGivenRound = data.filter((item) => {
+                const dataForGivenRoundAndGender = data.filter((item) => {
                     const itemRound = item["Round"];
-                    return itemRound == roundNumber;
+                    const itemGender = item["Gender"];
+                    return itemRound == roundNumber && itemGender == gender;
                 });
 
                 // Filter the data based on closing rank
-                const filteredData = dataForGivenRound.filter((item) => {
+                const filteredData = dataForGivenRoundAndGender.filter((item) => {
                     const closingRank = parseInt(item["Closing Rank"], 10);
                     return closingRank > parseInt(rank, 10);
                 });
@@ -54,6 +55,7 @@ const CollegePredictor = () => {
                 <h1>College Predictor</h1>
                 <h2>Your Category Rank: {rank}</h2>
                 <h2>Chosen Round Number: {roundNumber}</h2>
+                <h2>Chosen Gender: {gender}</h2>
                 <h3>Predicted colleges and courses for you</h3>
                 {isLoading ? (
                     <div className={styles.loading}>
