@@ -50,9 +50,15 @@ const HomePage = () => {
     };
 
     const handleSubmit = () => {
+        if (exam == "NEET") {
+            router.push(
+                `/college_predictor?rank=${rank}&category=${category}&roundNumber=${roundNumber}&exam=${exam}`
+            )
+        } else {
         router.push(
-            `/college_predictor?rank=${rank}&category=${category}&roundNumber=${roundNumber}&gender=${gender}&exam=${exam}&stateName=${stateName}`
+            `/college_predictor?rank=${rank}&category=${category}&roundNumber=${roundNumber}&exam=${exam}&gender=${gender}&stateName=${stateName}`
         );
+        }
     };
 
     const isCategoryInOptions = categoryOptions.some(
@@ -75,9 +81,11 @@ const HomePage = () => {
         rank <= 0 ||
         !isCategoryInOptions ||
         !isRoundNumberInOptions ||
-        !isGenderInOptions ||
-        !isExamInOptions ||
-        !isStateNameInOptions;
+        (exam !== "NEET" && (
+            !isGenderInOptions ||
+            !isExamInOptions ||
+            !isStateNameInOptions
+        ));
 
     return (
         <div className={styles.container}>
@@ -96,9 +104,6 @@ const HomePage = () => {
             </Script>
             <div className={styles.content}>
                 <h1>{getConstants().TITLE}</h1>
-                <label className={styles.label}>
-                    {getConstants().EXAM_LABEL}
-                </label>
                 <Dropdown
                     options={examOptions}
                     onChange={handleExamDropdownChange}
@@ -115,7 +120,9 @@ const HomePage = () => {
                 <p />
                 <p />
                 <label className={styles.label}>
-                    {getConstants().RANK_LABEL + "(" + exam + "):"}
+                    {exam === "NEET"
+                        ? getConstants().NEET_RANK_LABEL + "(" + exam + "):"
+                        : getConstants().RANK_LABEL + "(" + exam + "):"}
                 </label>
                 <input
                     type="number"
@@ -141,6 +148,7 @@ const HomePage = () => {
                 <Dropdown
                     options={genderOptions}
                     onChange={handleGenderDropdownChange}
+                    isDisabled={exam === "NEET"}
                 />
                 <p />
                 <p />
@@ -150,6 +158,7 @@ const HomePage = () => {
                 <Dropdown
                     options={stateOptions}
                     onChange={handleStateNameDropdownChange}
+                    isDisabled={exam === "NEET"}
                 />
                 <p />
 

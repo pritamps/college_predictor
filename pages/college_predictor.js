@@ -5,26 +5,35 @@ import getConstants from "../constants";
 
 const CollegePredictor = () => {
     const router = useRouter();
-    console.log(router.query);
-    const { rank, category, roundNumber, gender, exam, stateName } = router.query;
+    // console.log(router.query);
+    const { rank, category, roundNumber, exam, gender = "", stateName = "" } = router.query;
     const [filteredData, setFilteredData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("/data/" + category + ".json"); // Replace with the path to your category JSON file
+                let exam_fol;
+                if (exam === "JEE Main" || exam === "JEE Advanced") {
+                    exam_fol = "JEE"
+                } else exam_fol = "NEET";
+                const response = await fetch("/data/" + exam_fol + "/" + category + ".json"); // Replace with the path to your category JSON file
                 const data = await response.json();
 
                 // Filter the data based on round number
                 const dataForGivenQuery = data.filter((item) => {
-                    const itemRound = item["Round"];
-                    const itemGender = item["Gender"];
-                    const itemState = item["State"];
+                    const itemRound = parseInt(item["Round"], 10);
                     const itemExam = item["Exam"];
-                    const itemQuota = item["Quota"];
-                    const checkForState = (itemState == stateName) || (stateName == "All India") || (itemQuota == "OS") || (itemQuota == "AI");
-                    return itemRound == roundNumber && itemGender == gender && itemExam == exam && checkForState;
+                    if (exam != "NEET") {
+                        const itemGender = item["Gender"];
+                        const itemState = item["State"];
+                        const itemQuota = item["Quota"];
+                        const checkForState = (itemState == stateName) || (stateName == "All India") || (itemQuota == "OS") || (itemQuota == "AI");
+                        return itemRound == roundNumber && itemGender == gender && itemExam == exam && checkForState;
+                    }
+                    else {
+                        return itemRound == roundNumber;
+                    }        
                 });
 
                 // Filter the data based on closing rank
@@ -36,10 +45,18 @@ const CollegePredictor = () => {
                 );
 
                 // Sort the filteredData in ascending order of college rank
+                // for same college (with same rank), sort with opening rank
                 filteredData.sort((a, b) => {
                     const rankA = a["College Rank"];
                     const rankB = b["College Rank"];
-                    return rankA - rankB;
+
+                    if (rankA !== rankB) {
+                        return rankA - rankB;
+                    } else {
+                        const openingRankA = a["Opening Rank"];
+                        const openingRankB = b["Opening Rank"];
+                        return openingRankA - openingRankB;
+                    }
                 });
 
                 setFilteredData(filteredData);
@@ -60,12 +77,17 @@ const CollegePredictor = () => {
         <div className={styles.container}>
             <div className={styles.content}>
                 <h1>{getConstants().TITLE}</h1>
-                <h2>Your Category Rank: {rank}</h2>
+                <h2>{exam != "NEET"
+                    ? "Your Category Rank: " + rank
+                    : "Your Rank: " + rank}</h2>
                 <h3>Chosen Round Number: {roundNumber}</h3>
-                <h3>Chosen Gender: {gender}</h3>
                 <h3>Chosen Exam: {exam}</h3>
-                <h3>Chosen Home State: {stateName}</h3>
-
+                {exam != "NEET" && (
+                    <>
+                        <h3>Chosen Gender: {gender}</h3>
+                        <h3>Chosen Home State: {stateName}</h3>
+                    </>
+                )}
                 <h3>Predicted colleges and courses for you</h3>
                 {isLoading ? (
                     <div className={styles.loading}>
