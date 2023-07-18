@@ -104,6 +104,9 @@ const HomePage = () => {
             </Script>
             <div className={styles.content}>
                 <h1>{getConstants().TITLE}</h1>
+                <label className={styles.label}>
+                    {getConstants().EXAM_LABEL}
+                </label>
                 <Dropdown
                     options={examOptions}
                     onChange={handleExamDropdownChange}
