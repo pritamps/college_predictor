@@ -5,7 +5,6 @@ import getConstants from "../constants";
 
 const CollegePredictor = () => {
     const router = useRouter();
-    // console.log(router.query);
     const { rank, category, roundNumber, exam, gender = "", stateName = "" } = router.query;
     const [filteredData, setFilteredData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -17,21 +16,21 @@ const CollegePredictor = () => {
                 if (exam === "JEE Main" || exam === "JEE Advanced") {
                     exam_fol = "JEE"
                 } else exam_fol = "NEET";
-                const response = await fetch("/data/" + exam_fol + "/" + category + ".json"); // Replace with the path to your category JSON file
+                const response = await fetch("/data/" + exam_fol + "/" + category + ".json");
                 const data = await response.json();
 
                 // Filter the data based on round number
                 const dataForGivenQuery = data.filter((item) => {
                     const itemRound = parseInt(item["Round"], 10);
                     const itemExam = item["Exam"];
-                    if (exam != "NEET") {
+                    if (exam === "JEE Main" || exam === "JEE Advanced") {
                         const itemGender = item["Gender"];
                         const itemState = item["State"];
                         const itemQuota = item["Quota"];
                         const checkForState = (itemState == stateName) || (stateName == "All India") || (itemQuota == "OS") || (itemQuota == "AI");
                         return itemRound == roundNumber && itemGender == gender && itemExam == exam && checkForState;
                     }
-                    else {
+                    else if (exam === "NEET") {
                         return itemRound == roundNumber;
                     }        
                 });

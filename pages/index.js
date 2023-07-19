@@ -145,25 +145,29 @@ const HomePage = () => {
                 />
                 <p />
                 <p />
-                <label className={styles.label}>
-                    {getConstants().GENDER_LABEL}
-                </label>
-                <Dropdown
-                    options={genderOptions}
-                    onChange={handleGenderDropdownChange}
-                    isDisabled={exam === "NEET"}
-                />
-                <p />
-                <p />
-                <label className={styles.label}>
-                    {getConstants().STATE_LABEL}
-                </label>
-                <Dropdown
-                    options={stateOptions}
-                    onChange={handleStateNameDropdownChange}
-                    isDisabled={exam === "NEET"}
-                />
-                <p />
+                {exam != "NEET" && (
+                    <>
+                       <label className={styles.label}>
+                            {getConstants().GENDER_LABEL}
+                        </label>
+                        <Dropdown
+                            options={genderOptions}
+                            onChange={handleGenderDropdownChange}
+                            isDisabled={exam === "NEET"}
+                        />
+                        <p />
+                        <p />
+                        <label className={styles.label}>
+                            {getConstants().STATE_LABEL}
+                        </label>
+                        <Dropdown
+                            options={stateOptions}
+                            onChange={handleStateNameDropdownChange}
+                            isDisabled={exam === "NEET"}
+                        />
+                        <p />
+                    </>
+                )}
 
                 <button
                     className={styles.button}
