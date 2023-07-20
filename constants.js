@@ -1,12 +1,13 @@
 const constants = {
-    TITLE: "JEE Rank College Predictor",
+    TITLE: "Exam Rank College Predictor",
     CATEGORY_LABEL: "Select Category:",
     CATEGORY_OPTIONS: [
         { value: "AI", label: "AI" },
         { value: "HS", label: "HS" },
         { value: "OS", label: "OS" },
     ],
-    RANK_LABEL: "Enter Category Rank ",
+    RANK_LABEL: "Enter Category Rank",
+    NEET_RANK_LABEL: "Enter Rank",
     GENDER_LABEL: "Select Gender:",
     EXAM_LABEL: "Select Exam:",
     STATE_LABEL: "Select Your Home State:",
@@ -40,7 +41,8 @@ const constants = {
     ],
     EXAM_OPTIONS: [
         {value: "jee_main", label: "JEE Main"},
-        {value: "jee_advanced", label: "JEE Advanced"}
+        {value: "jee_advanced", label: "JEE Advanced"},
+        {value: "neet", label: "NEET"}
     ],
     STATE_OPTIONS: [
         { value: 'all_india', label: 'All India' },
